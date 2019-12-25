@@ -93,7 +93,7 @@
 						side: THREE.DoubleSide
 					} );
 								
-					for ( var i = 0; i < 100; i ++ ) {
+					for ( var i = 0; i < 200; i ++ ) {
 					
 					    var message = data.NAME[i];//data.NAME.length
 					    var shapes = font.generateShapes( message, 40 );
@@ -146,7 +146,7 @@
                 );
                 geometry.colors.push(
                 new THREE.Color( 0x006699 ), 
-                new THREE.Color( 0xFFFFFFFF )
+                new THREE.Color( 0xFFFFEE00 )
                 );			
                 material = new THREE.LineBasicMaterial({ vertexColors: true });
                 var line = new THREE.Line(geometry, material);

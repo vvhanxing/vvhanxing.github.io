@@ -28,11 +28,11 @@
 
 
 
-			//import Stats from './jsm/libs/stats.module.js';
+			import Stats from './jsm/libs/stats.module.js';
 
 
 
-			var camera, scene, renderer,  group;
+			var camera, scene, renderer, stats, group;
 
 
 
@@ -210,9 +210,9 @@
 
 
 
-				//stats = new Stats();
+				stats = new Stats();
 
-				//document.body.appendChild( stats.dom );
+				document.body.appendChild( stats.dom );
 
 
 
@@ -288,7 +288,7 @@
 
 				render();
 
-				//stats.update();
+				stats.update();
 
 
 

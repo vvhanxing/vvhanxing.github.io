@@ -104,8 +104,8 @@
 						text.position.z = z_t;
 					    scene.add( text );
 						
-						
-						var message = data.formulas[i];//data.NAME.length
+					    if (data.formulas[i]!=" "){
+					    var message = data.formulas[i];//data.NAME.length
 					    var shapes = font.generateShapes( message, 20 );
 					    var geometry = new THREE.ShapeBufferGeometry( shapes );
 					    geometry.computeBoundingBox();
@@ -123,23 +123,25 @@
 						var z_l = z_t + Math.random()*200;
 						text.position.z = z_l;
 					    scene.add( text );
+					    }
 						
 						
 						
 						
 						
-				geometry = new THREE.Geometry();
+		geometry = new THREE.Geometry();
                 geometry.vertices.push(
                 new THREE.Vector3(x_t, y_t, z_t),
                 new THREE.Vector3(x_l, y_l, z_l)
                 );
                 geometry.colors.push(
-                new THREE.Color( 0x444444 ), 
-                new THREE.Color( 0xFF0000 )
+                new THREE.Color( 0x006699 ), 
+                new THREE.Color( 0xFFFFFFFF )
                 );			
                 material = new THREE.LineBasicMaterial({ vertexColors: true });
                 var line = new THREE.Line(geometry, material);
                 scene.add(line);
+						
 						
 					}
                 })			

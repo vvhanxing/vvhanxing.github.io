@@ -75,8 +75,18 @@
 				var loader = new THREE.FontLoader();
 				loader.load( 'fonts/helvetiker_regular.typeface.json', function ( font ) {
 					var xMid, text;
-					var color = 0xFFFFEE00;
+					var color = 0x006699;
 					var matLite = new THREE.MeshBasicMaterial( {
+						color: color,
+						transparent: true,
+						opacity: 0.4,
+						side: THREE.DoubleSide
+					} );
+					
+					
+					
+					var color1 = 0xFFFFEE00;
+					var matLite1 = new THREE.MeshBasicMaterial( {
 						color: color,
 						transparent: true,
 						opacity: 0.4,
@@ -112,7 +122,7 @@
 					    xMid = - 0.5 * ( geometry.boundingBox.max.x - geometry.boundingBox.min.x );
 					    geometry.translate( xMid, 0, 0 );
 					    // make shape ( N.B. edge view not visible )
-					    text = new THREE.Mesh( geometry, matLite );
+					    text = new THREE.Mesh( geometry, matLite1 );
 						
 						var x_l = x_t + Math.random()*200;
 					    text.position.x = x_l;

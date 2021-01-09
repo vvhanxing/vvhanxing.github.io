@@ -7,8 +7,6 @@
     
     
     
-    
-    
 <script>
 
   AFRAME.registerComponent('forward', {
@@ -76,6 +74,8 @@
 	
 	
     tick: function (time, timeDelta) {
+	
+	    var data = this.data;
 	 
 	    var sceneEl   = document.querySelector('a-scene');
 	    var forwardEl = sceneEl.querySelector('#forward');
@@ -85,41 +85,41 @@
         var mycamera  = sceneEl.querySelector('#mycamera');  	
 
 	if(this.data.isForward==="true"){
-	    forwardEl.object3D.position.z-=this.data.speed;
-		backEl.object3D.position.z-=this.data.speed;
-		leftEl.object3D.position.z-=this.data.speed;
-		rightEl.object3D.position.z-=this.data.speed;
-		mycamera.object3D.position.z-=this.data.speed;
+	    forwardEl.object3D.position.z -=data.speed;
+		backEl.object3D.position.z    -=data.speed;
+		leftEl.object3D.position.z    -=data.speed;
+		rightEl.object3D.position.z   -=data.speed;
+		mycamera.object3D.position.z  -=data.speed;
 
 	}
 
 	if(this.data.isBack=="true"){
-	    forwardEl.object3D.position.z+=this.data.speed;
-		backEl.object3D.position.z+=this.data.speed;
-		leftEl.object3D.position.z+=this.data.speed;
-		rightEl.object3D.position.z+=this.data.speed;
-		mycamera.object3D.position.z+=this.data.speed;
+	    forwardEl.object3D.position.z +=data.speed;
+		backEl.object3D.position.z    +=data.speed;
+		leftEl.object3D.position.z    +=data.speed;
+		rightEl.object3D.position.z   +=data.speed;
+		mycamera.object3D.position.z  +=data.speed;
 	}
 	
 	if(this.data.isLeft=="true"){
 
 		
 	    
-	    forwardEl.object3D.position.x-=this.data.speed;
-		backEl.object3D.position.x-=this.data.speed;
-		leftEl.object3D.position.x-=this.data.speed;
-		rightEl.object3D.position.x-=this.data.speed;
-		mycamera.object3D.position.x-=this.data.speed;		
+	    forwardEl.object3D.position.x -=data.speed;
+		backEl.object3D.position.x    -=data.speed;
+		leftEl.object3D.position.x    -=data.speed;
+		rightEl.object3D.position.x   -=data.speed;
+		mycamera.object3D.position.x  -=data.speed;		
 		
 	}
 	
 	if(this.data.isRight=="true"){
 	
-	    forwardEl.object3D.position.x+=this.data.speed;
-		backEl.object3D.position.x+=this.data.speed;
-		leftEl.object3D.position.x+=this.data.speed;
-		rightEl.object3D.position.x+=this.data.speed;
-		mycamera.object3D.position.x+=this.data.speed;
+	    forwardEl.object3D.position.x +=data.speed;
+		backEl.object3D.position.x    +=data.speed;
+		leftEl.object3D.position.x    +=data.speed;
+		rightEl.object3D.position.x   +=data.speed;
+		mycamera.object3D.position.x  +=data.speed;
 	}	
 	
   }	
@@ -161,4 +161,3 @@
 
   </body>
 </html>
-

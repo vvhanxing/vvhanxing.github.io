@@ -8,6 +8,7 @@
     
     
     
+    
 <script>
 
   AFRAME.registerComponent('forward', {
@@ -131,7 +132,18 @@
 
 	
 	
-      <a-entity camera id="mycamera" look-controls wasd-controls raycaster="recursive: false; interval: 1000"></a-entity>
+      <a-entity camera id="mycamera" look-controls wasd-controls raycaster="recursive: false; interval: 1000">
+
+          <a-entity raycaster="far: 30; objects: .intersectable"
+                    cursor
+                    geometry="primitive: ring; radiusOuter: 0.015;
+                              radiusInner: 0.01; segmentsTheta: 32"
+                    material="color: #283644; shader: flat"
+                    position="0 0 -0.75"></a-entity>	  
+	  
+	  
+	  
+	  </a-entity>
       <a-entity geometry="primitive: box" id="forward" material="color: #f77" position=" 0 -1 -2" forward="isForward:false"></a-entity>
 	  <a-entity geometry="primitive: box" id="back" material="color: #f77" position=" 0 -1  2" forward="isForward:false"></a-entity>
 	  <a-entity geometry="primitive: box" id="left" material="color: #f77" position="-2 -1  0" forward="isForward:false"></a-entity>

@@ -13,10 +13,13 @@
   AFRAME.registerComponent('forward', {
 
     schema: {
-    isForward: {type: 'string'},
-	isBack:    {type: 'string'},
-	isLeft:    {type: 'string'},
-	isRight:   {type: 'string'}
+	    
+        isForward: {type: 'string', default: "false"},
+	isBack:    {type: 'string', default: "false"},
+	isLeft:    {type: 'string', default: "false"},
+	isRight:   {type: 'string', default: "false"},
+	speed:     {type: 'number', default: 0.02},
+	    
     },	
 	
     update: function () {
@@ -81,41 +84,41 @@
         var mycamera  = sceneEl.querySelector('#mycamera');  	
 
 	if(this.data.isForward==="true"){
-	    forwardEl.object3D.position.z-=0.01;
-		backEl.object3D.position.z-=0.01;
-		leftEl.object3D.position.z-=0.01;
-		rightEl.object3D.position.z-=0.01;
-		mycamera.object3D.position.z-=0.01;
+	    forwardEl.object3D.position.z-=this.data.speed;
+		backEl.object3D.position.z-=this.data.speed;
+		leftEl.object3D.position.z-=this.data.speed;
+		rightEl.object3D.position.z-=this.data.speed;
+		mycamera.object3D.position.z-=this.data.speed;
 
 	}
 
 	if(this.data.isBack=="true"){
-	    forwardEl.object3D.position.z+=0.01;
-		backEl.object3D.position.z+=0.01;
-		leftEl.object3D.position.z+=0.01;
-		rightEl.object3D.position.z+=0.01;
-		mycamera.object3D.position.z+=0.01;
+	    forwardEl.object3D.position.z+=this.data.speed;
+		backEl.object3D.position.z+=this.data.speed;
+		leftEl.object3D.position.z+=this.data.speed;
+		rightEl.object3D.position.z+=this.data.speed;
+		mycamera.object3D.position.z+=this.data.speed;
 	}
 	
 	if(this.data.isLeft=="true"){
 
 		
 	    
-	    forwardEl.object3D.position.x-=0.01;
-		backEl.object3D.position.x-=0.01;
-		leftEl.object3D.position.x-=0.01;
-		rightEl.object3D.position.x-=0.01;
-		mycamera.object3D.position.x-=0.01;		
+	    forwardEl.object3D.position.x-=this.data.speed;
+		backEl.object3D.position.x-=this.data.speed;
+		leftEl.object3D.position.x-=this.data.speed;
+		rightEl.object3D.position.x-=this.data.speed;
+		mycamera.object3D.position.x-=this.data.speed;		
 		
 	}
 	
 	if(this.data.isRight=="true"){
 	
-	    forwardEl.object3D.position.x+=0.01;
-		backEl.object3D.position.x+=0.01;
-		leftEl.object3D.position.x+=0.01;
-		rightEl.object3D.position.x+=0.01;
-		mycamera.object3D.position.x+=0.01;
+	    forwardEl.object3D.position.x+=this.data.speed;
+		backEl.object3D.position.x+=this.data.speed;
+		leftEl.object3D.position.x+=this.data.speed;
+		rightEl.object3D.position.x+=this.data.speed;
+		mycamera.object3D.position.x+=this.data.speed;
 	}	
 	
   }	

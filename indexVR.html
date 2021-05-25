@@ -1,0 +1,185 @@
+<html>
+  <head>
+    <script src="static/build/aframe-master.js"></script>
+  </head>
+  <body>
+
+    
+    
+    
+    
+<script>
+
+  AFRAME.registerComponent('move', {
+
+    schema: {
+	    
+        isForward: {type: 'string', default: "false"},
+	isBack:    {type: 'string', default: "false"},
+	isLeft:    {type: 'string', default: "false"},
+	isRight:   {type: 'string', default: "false"},
+	speed:     {type: 'number', default: 0.04},
+	    
+    },	
+	
+    update: function () {
+	    var data = this.data;
+	    var sceneEl   = document.querySelector('a-scene');
+	    var forwardEl = sceneEl.querySelector('#forward');
+	    var backEl    = sceneEl.querySelector('#back');
+	    var leftEl    = sceneEl.querySelector('#left');
+	    var rightEl   = sceneEl.querySelector('#right');
+
+	  
+        this.el.addEventListener('raycaster-intersected', function (evt) {
+		
+        var el = evt.target;
+
+		if (evt.target==forwardEl){
+            el.setAttribute('material', 'color', '#7f7');
+		    data.isForward="true";		
+		}
+
+		if (evt.target==backEl){
+            el.setAttribute('material', 'color', '#7f7');
+		    data.isBack="true";		
+		}
+
+		if (evt.target==leftEl){
+            el.setAttribute('material', 'color', '#7f7');
+		    data.isLeft="true";		
+		}
+		
+		if (evt.target==rightEl){
+            el.setAttribute('material', 'color', '#7f7');
+		    data.isRight="true";		
+		}		
+		
+		console.log(evt.target);
+		
+		
+      });
+
+      this.el.addEventListener('raycaster-intersected-cleared', function (evt) {
+        var el = evt.target;
+	// May get two intersection events per tick; same element, different faces.
+        //console.log('raycaster-intersected-cleared ' + el.outerHTML);
+        el.setAttribute('material', 'color', '#f77');
+		data.isForward="false";
+		data.isBack="false";
+		data.isLeft="false";
+		data.isRight="false";
+		
+      });
+	  
+	  
+    },
+	
+	
+    tick: function (time, timeDelta) {
+	
+	    var data = this.data;
+	    var sceneEl   = document.querySelector('a-scene');
+		var move   = sceneEl.querySelector('#move');
+        var mycamera  = sceneEl.querySelector('#mycamera');  	
+
+	if(this.data.isForward==="true"){
+	
+	    move.object3D.position.z -=data.speed;
+		mycamera.object3D.position.z  -=data.speed;
+
+	}
+
+	if(this.data.isBack=="true"){
+	
+	    move.object3D.position.z +=data.speed;
+		mycamera.object3D.position.z  +=data.speed;
+	}
+	
+	if(this.data.isLeft=="true"){
+
+	    move.object3D.position.x -=data.speed;
+		mycamera.object3D.position.x  -=data.speed;		
+		
+	}
+	
+	if(this.data.isRight=="true"){
+	
+	    move.object3D.position.x +=data.speed;
+		mycamera.object3D.position.x  +=data.speed;
+	}	
+	
+  }	
+	
+  });
+
+</script>
+
+    <a-scene>
+
+      <a-assets>
+
+	  
+	  <a-asset-item id="girl" src="static/3Dmodels/girl/girl.glb">
+	  
+	  
+	  
+	  <img id="lake" src="static/pic/lake.jpg">
+      </a-assets>
+	  <a-sky src="#lake"></a-sky>
+
+
+	
+	
+      <a-entity camera id="mycamera" look-controls wasd-controls raycaster="recursive: false; interval: 1000">
+
+          <a-entity raycaster="far: 30; objects: .intersectable"
+                    cursor
+                    geometry="primitive: ring; radiusOuter: 0.015;
+                              radiusInner: 0.01; segmentsTheta: 32"
+                    material="color: #283644; shader: flat"
+                    position="0 0 -0.75"></a-entity>	  
+	  
+	  
+	  
+	  </a-entity>
+	  
+	  
+
+	  
+    <a-light type="ambient" intensity="1"></a-light>
+    <!-- <a-box position="-1 0 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
+    <a-sphere position="0 0 -5" radius="1.25" color="#EF2D5E"></a-sphere>
+    <a-cylinder position="1 0 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+    <a-plane position="0 -2 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
+	<a-entity gltf-model="#girl" rotation="90 0 0" position="0 -0.5 0" scale=".2 .2 .2"></a-entity> 
+	<a-entity gltf-model="#room" rotation="0 0 0" position="0 -0.5 0" scale="1 1 1"></a-entity> -->
+
+
+    <a-entity gltf-model="#girl" rotation="0 0 0" position="0 -1 0" scale="1 1 1"></a-entity>
+
+
+    <a-entity id="move" position="0 -1 0">
+	
+    <!--<a-entity gltf-model="#move1" rotation="0 0 0" position="0 0 0" scale="1 1 1"></a-entity>
+	<a-entity gltf-model="#move2" rotation="0 0 0" position="0 0 0" scale="1 1 1"></a-entity>
+	<a-entity gltf-model="#move3" rotation="0 0 0" position="0 0 0" scale="1 1 1"></a-entity>
+	<a-entity gltf-model="#move4" rotation="0 0 0" position="0 0 0" scale="1 1 1"></a-entity>
+	<a-entity gltf-model="#move5" rotation="0 0 0" position="0 0 0" scale="1 1 1"></a-entity>
+	<a-entity gltf-model="#move6" rotation="0 0 0" position="0 0 0" scale="1 1 1"></a-entity>
+	<a-entity gltf-model="#move7" rotation="0 0 0" position="0 0 0" scale="1 1 1"></a-entity>
+	<a-entity gltf-model="#move8" rotation="0 0 0" position="0 0 0" scale="1 1 1"></a-entity> -->
+	
+      <a-entity geometry="primitive: box" id="forward" material="color: #f77" scale=".5 .1 .5" position=" 0 -.5 -1" move="isForward:false"></a-entity>
+	  <a-entity geometry="primitive: box" id="back" material="color: #f77" scale=".5 .1 .5" position=" 0 -.5  1" move="isForward:false"></a-entity>
+	  <a-entity geometry="primitive: box" id="left" material="color: #f77" scale=".5 .1 .5" position="-1 -.5  0" move="isForward:false"></a-entity>
+	  <a-entity geometry="primitive: box" id="right" material="color: #f77" scale=".5 .1 .5" position=" 1 -.5  0" move="isForward:false"></a-entity>	
+	
+	</a-entity>
+	
+	
+   </a-scene>
+
+  </body>
+</html>
+

@@ -121,7 +121,7 @@
 
 	  
 	  <a-asset-item id="girl" src="static/3Dmodels/scene.gltf">
-	  
+		<a-asset-item id="v" src="static/3Dmodels/v.gltf">
 	  
 	  
 	  <img id="lake" src="static/pic/lake.jpg">
@@ -131,36 +131,42 @@
 
 	
 	
-      <a-entity camera id="mycamera" look-controls wasd-controls raycaster="recursive: false; interval: 1000">
+	  <a-entity camera id="mycamera" look-controls wasd-controls raycaster="recursive: false; interval: 1000">
 
-          <a-entity raycaster="far: 30; objects: .intersectable"
-                    cursor
-                    geometry="primitive: ring; radiusOuter: 0.015;
-                              radiusInner: 0.01; segmentsTheta: 32"
-                    material="color: #283644; shader: flat"
-                    position="0 0 -0.75"></a-entity>	  
-	  
+		<a-entity raycaster="far: 30; objects: .intersectable"
+				  cursor
+				  geometry="primitive: ring; radiusOuter: 0.015;
+							radiusInner: 0.01; segmentsTheta: 32"
+				  material="color: #283644; shader: flat"
+				  position="0 0 -0.75"></a-entity>	  
+	
 
-	  
-	  </a-entity>
-	  
+	
+	</a-entity>
+	
 	  
 	  <a-entity id="move" position="0 0 0">
 	
-		<!--<a-entity gltf-model="#move1" rotation="0 0 0" position="0 0 0" scale="1 1 1"></a-entity>
-		<a-entity gltf-model="#move2" rotation="0 0 0" position="0 0 0" scale="1 1 1"></a-entity>
-		<a-entity gltf-model="#move3" rotation="0 0 0" position="0 0 0" scale="1 1 1"></a-entity>
-		<a-entity gltf-model="#move4" rotation="0 0 0" position="0 0 0" scale="1 1 1"></a-entity>
-		<a-entity gltf-model="#move5" rotation="0 0 0" position="0 0 0" scale="1 1 1"></a-entity>
-		<a-entity gltf-model="#move6" rotation="0 0 0" position="0 0 0" scale="1 1 1"></a-entity>
-		<a-entity gltf-model="#move7" rotation="0 0 0" position="0 0 0" scale="1 1 1"></a-entity>
-		<a-entity gltf-model="#move8" rotation="0 0 0" position="0 0 0" scale="1 1 1"></a-entity> -->
+
 		
-<a-entity geometry="primitive: box" id="forward" material="color: #f77" scale=".5 .1 .5" position=" 0 -.5 -1" move="isForward:false"></a-entity>
-<a-entity geometry="primitive: box" id="back" material="color: #f77" scale=".5 .1 .5" position=" 0 -.5  1" move="isForward:false"></a-entity>
-<a-entity geometry="primitive: box" id="left" material="color: #f77" scale=".5 .1 .5" position="-1 -.5  0" move="isForward:false"></a-entity>
-<a-entity geometry="primitive: box" id="right" material="color: #f77" scale=".5 .1 .5" position=" 1 -.5  0" move="isForward:false"></a-entity>	
-		
+
+
+
+
+		<a-entity gltf-model="#v" id="forward" material="color: #f77" scale=".5 .1 .5" position=" 0 -.5 -1" move="isForward:false" rotation="0 0 0"></a-entity>
+		<a-entity gltf-model="#v" id="back" material="color: #f77" scale=".5 .1 .5" position=" 0 -.5  1" move="isForward:false" rotation="0 180 0"></a-entity>
+		<a-entity gltf-model="#v" id="left" material="color: #f77" scale=".5 .1 .5" position="-1 -.5  0" move="isForward:false" rotation="0 90 0"></a-entity>
+		<a-entity gltf-model="#v" id="right" material="color: #f77" scale=".5 .1 .5" position=" 1 -.5  0" move="isForward:false" rotation="0 270 0"></a-entity>	
+				
+
+
+
+
+
+
+
+
+
 </a-entity>
 	  
     <a-light type="ambient" intensity="1"></a-light>

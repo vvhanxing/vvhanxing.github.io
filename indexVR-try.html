@@ -25,6 +25,13 @@
       </a-assets>
 	  <a-sky color="#000000"></a-sky> 
 	  
+	      
+          <a-entity geometry="primitive: sphere; radius: 0.25"
+                    material="color: #EF2D5E; shader: flat"
+                    light="castShadow: true; color: #EF2D5E; intensity: 1; shadowBias: 0.01
+                           shadowCameraNear: 1; type: point; shadowMapWidth: 1024; shadowMapHeight: 1024"
+                    position="0 5 5"></a-entity>		      
+	      
       <a-entity gltf-model="#girl" rotation="0 -90 0" position="0 -35 -150" scale="1.5 1.5 1.5" shadow>
 
       <a-entity material="shader: flat; src: #videoBunny"

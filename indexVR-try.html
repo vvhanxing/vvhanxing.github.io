@@ -1,0 +1,268 @@
+<html>
+  <head>
+<script src="static/build/aframe-v1.0.0.min.js"></script>
+	
+<script src="static/build/play-on-click.js"></script>	
+
+
+
+
+
+<script>
+
+  AFRAME.registerComponent('move', {
+
+    schema: {
+	    
+    isForward: {type: 'string', default: "false"},
+	isBack:    {type: 'string', default: "false"},
+	isLeft:    {type: 'string', default: "false"},
+	isRight:   {type: 'string', default: "false"},
+	speed:     {type: 'number', default: 0.1},
+	    
+    },	
+	
+    update: function () {
+	    var data = this.data;
+	    var sceneEl   = document.querySelector('a-scene');
+	    var forwardEl = sceneEl.querySelector('#forward');
+	    var backEl    = sceneEl.querySelector('#back');
+	    var leftEl    = sceneEl.querySelector('#left');
+	    var rightEl   = sceneEl.querySelector('#right');
+
+	  
+        this.el.addEventListener('raycaster-intersected', function (evt) {
+		
+        var el = evt.target;
+
+		if (evt.target==forwardEl){
+            el.setAttribute('material', 'color', '#7f7');
+		    data.isForward="true";		
+		}
+
+		if (evt.target==backEl){
+            el.setAttribute('material', 'color', '#7f7');
+		    data.isBack="true";		
+		}
+
+		if (evt.target==leftEl){
+            el.setAttribute('material', 'color', '#7f7');
+		    data.isLeft="true";		
+		}
+		
+		if (evt.target==rightEl){
+            el.setAttribute('material', 'color', '#7f7');
+		    data.isRight="true";		
+		}		
+		
+		console.log(evt.target);
+		
+		
+      });
+
+      this.el.addEventListener('raycaster-intersected-cleared', function (evt) {
+        var el = evt.target;
+	// May get two intersection events per tick; same element, different faces.
+        //console.log('raycaster-intersected-cleared ' + el.outerHTML);
+        el.setAttribute('material', 'color', '#f77');
+		data.isForward="false";
+		data.isBack="false";
+		data.isLeft="false";
+		data.isRight="false";
+		
+      });
+	  
+	  
+    },
+	
+	
+    tick: function (time, timeDelta) {
+	
+	    var data = this.data;
+	    var sceneEl   = document.querySelector('a-scene');
+		var move   = sceneEl.querySelector('#move');
+        var mycamera  = sceneEl.querySelector('#mycamera');  	
+
+	if(this.data.isForward==="true"){
+	
+	    move.object3D.position.z -=data.speed;
+		mycamera.object3D.position.z  -=data.speed;
+
+	}
+
+	else if(this.data.isBack=="true"){
+	
+	    move.object3D.position.z +=data.speed;
+		mycamera.object3D.position.z  +=data.speed;
+	}
+	
+	else if(this.data.isLeft=="true"){
+
+	    move.object3D.position.x -=data.speed;
+		mycamera.object3D.position.x  -=data.speed;		
+		
+	}
+	
+	else if(this.data.isRight=="true"){
+	
+	    move.object3D.position.x +=data.speed;
+		mycamera.object3D.position.x  +=data.speed;
+	}	
+
+	
+  }	
+	
+  });
+</script>
+
+
+
+
+
+
+
+	
+  </head>
+  <body>
+    <a-scene>
+
+
+      <a-assets>
+
+	  
+        <a-asset-item id="girl" src="static/3Dmodels/party.gltf"></a-asset-item>
+        <img id="lake" src="static/pic/lake.jpg">
+		  
+		  
+	    <video id="videoBunny" preload="auto"
+               src="static/pic/WeChat.mp4"
+               width="160" height="90" autoplay loop="true"
+               crossOrigin="anonymous" muted></video>	  
+
+			   <a-asset-item id="v" src="static/3Dmodels/v.gltf">
+		  
+
+      </a-assets>
+	  <a-sky color="#000000"></a-sky> 
+	  
+	  
+	  
+          <a-entity geometry="primitive: sphere; radius: 0.25"
+                    material="color: #EF2D5E; shader: flat"
+                    light="castShadow: true; color: #EF2D5E; intensity: 1; shadowBias: 0.01
+                           shadowCameraNear: 1; type: point; shadowMapWidth: 1024; shadowMapHeight: 1024"
+                    position="0 5 5"></a-entity>	  
+	  
+	  
+	  
+	  
+      <a-entity gltf-model="#girl" rotation="0 -90 0" position="0 -35 -120" scale="1.5 1.5 1.5" >
+
+
+
+
+      <a-entity gltf-model="#girl" rotation="0 180 0" position="50 -35 -10" scale="1.5 1.5 1.5" >
+
+
+      <a-light type="ambient" intensity="20"></a-light>
+
+          
+		  
+		  
+		  
+		  
+      <!-- <a-camera id="mycamera" look-controls wasd-controls raycaster="recursive: false; interval: 1000" position="0 50 0">
+
+
+		<a-entity raycaster="far: 30; objects: .intersectable"
+				  cursor
+				  geometry="primitive: ring; radiusOuter: 0.015;
+							radiusInner: 0.01; segmentsTheta: 32"
+				  material="color: #283644; shader: flat"
+				  position="0 0 -0.75"></a-entity>	  
+
+
+      </a-camera>		  
+		  
+		   -->
+		  
+	
+				  
+		   <a-camera id="mycamera" look-controls wasd-controls 
+		   raycaster="recursive: false; interval: 1000" position="0 40 0">
+
+
+			<a-entity raycaster="far: 30; objects: .intersectable"
+					  cursor
+					  geometry="primitive: ring; radiusOuter: 0.015;
+								radiusInner: 0.01; segmentsTheta: 32"
+					  material="color: #283644; shader: flat"
+					  position="0 0 -0.75"></a-entity>	  
+	
+	
+		  </a-camera>		  
+				 
+		  
+		  
+		  
+		  
+		<a-entity id="move" position="0 40 0">
+
+		<a-entity gltf-model="#v" 
+		          id="forward" 
+				  material="color: #f77" 
+				  scale=".5 .1 .5" 
+				  position=" 0 -.5 -1" 
+				  move="isForward:false" 
+				  rotation="0 0 0"
+		           >
+		</a-entity>
+
+		<a-entity gltf-model="#v" 
+		          id="back" 
+		          material="color: #f77" 
+		          scale=".5 .1 .5" 
+		          position=" 0 -.5  1" 
+		          move="isForward:false" 
+		          rotation="0 180 0"
+		></a-entity>
+
+		<a-entity gltf-model="#v" 
+		          id="left" 
+		          material="color: #f77" 
+		          scale=".5 .1 .5" 
+		          position="-1 -.5  0" 
+		          move="isForward:false" 
+		          rotation="0 90 0"
+		></a-entity>
+
+		<a-entity gltf-model="#v" 
+		          id="right" 
+		          material="color: #f77" 
+		          scale=".5 .1 .5" 
+		          position=" 1 -.5  0" 
+		          move="isForward:false" 
+		          rotation="0 270 0"
+		
+		 ></a-entity>	
+				
+    </a-entity>	  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+     
+    </a-scene>
+  </body>
+</html>
+
+

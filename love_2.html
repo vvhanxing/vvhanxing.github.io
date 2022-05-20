@@ -1,0 +1,95 @@
+<!doctype HTML>
+
+<html>
+
+<!-- include A-Frame obviously -->
+
+<script src="static/build/aframe-v1.0.0.min.js"></script>
+
+<script src="static/build/aframe-shadow-plane.js"></script>
+
+<!-- include ar.js for A-Frame -->
+
+<script src="static/build/aframe-ar-nft.js"></script>
+
+<!-- include A-Frame-Extras -->
+<script src="static/build/animation-mixer.js"></script>
+
+<script src="static/build/aframe-extras.min.js"></script>
+
+
+
+<!-- gesture -->
+
+<script src="static/build/gesture-detector.js"></script>
+<script src="static/build/gesture-handler.js"></script>
+	
+<script src="static/build/play-on-click.js"></script>	
+
+
+	
+<body style='margin : 0px; overflow: hidden;'>
+
+  <a-scene embedded arjs='sourceType: webcam; debugUIEnabled: false;' gesture-detector >
+	  <a-assets>
+		  <a-asset-item id="tree" src="static/3Dmodels/bear.gltf">
+
+
+        <video id="videoBunny" preload="auto"
+        src="static/pic/WeChat.mp4"
+        width="160" height="90" autoplay loop="true"
+        crossOrigin="anonymous" muted></video>
+
+
+
+
+
+
+      </a-assets>
+    <!-- load gltf model -->
+
+    <a-marker preset='custom' type='pattern' url='static/build/data/pattern-marker.patt'
+	raycaster="objects: .clickable"
+        emitevents="true"
+        cursor="fuse: false; rayOrigin: mouse;"  
+	      >
+	
+      <a-entity position="0 0 0"
+	            rotation="90 0 0"
+	            scale="0.2 0.2 0.2"
+                animation-mixer="clip: *;"
+				shadow='receive: false'
+                gltf-model="#tree"
+		class="clickable"
+                gesture-handler    >
+
+
+
+      </a-entity>
+
+      <a-entity material="shader: flat; src: #videoBunny"
+      geometry="primitive: plane; width: 0.3; height: 0.2;"
+      position="0 0.1 0.24"
+      rotation="90 0 0"
+      play-on-click
+      visible="true">
+</a-entity>
+
+
+
+
+
+	  <!--  <a-entity rotation="0 0 0" shadowonly-plane='width: 24; height: 12; opacity: 0.7'></a-entity>  -->
+
+    </a-marker>
+
+    
+    <!-- add camera -->
+
+    <a-entity camera></a-entity>
+
+  </a-scene>
+
+</body>
+
+</html>

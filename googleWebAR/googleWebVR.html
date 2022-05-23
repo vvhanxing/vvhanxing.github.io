@@ -1,0 +1,261 @@
+<!--
+/*
+ * Created by Marla Na on 11.09.17.
+ * Copyright © 2017 Marla Na. All rights reserved.
+ */
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>WebAR</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no,
+  minimum-scale=1.0, maximum-scale=1.0">
+  <!--CSS Styling--->
+  <style>
+    body {
+      font-family: helvetica;
+      margin: 0;
+      overflow: hidden;
+      position: fixed;
+      width: 100%;
+      height: 100vh;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    #info {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translate(-50%, 0);
+      margin: 1em;
+      z-index: 10;
+      display: block;
+      width: 100%;
+      line-height: 2em;
+      text-align: center;
+    }
+    #info a, #info .title {
+      padding: 0.4em 0.6em;
+      border-radius: 0.1em;
+    }
+    #info a {
+      color: rgba(255, 255, 255, 0.8);
+      background-color: rgba(40, 40, 40, 0.6);
+      font-weight: bold;
+      text-decoration: none;
+    }
+    .title {
+      color: rgba(255, 255, 255, 0.9);
+      background-color: rgba(40, 40, 40, 0.4);
+      margin-left: 0.2em;
+    }
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  </style>
+</head>
+<body>
+<div id="info">
+    <a href="https://github.com/nagam11/WebAR">WebAR</a><span class="title">Tap to create objects</span>
+    <select id="objects">
+      <option value="cube">Cube</option>
+      <option value="line">Line</option>
+      <option value="sprite">SpriteObject</option>
+    </select>
+</div>
+<!--Import js libraries-->
+<script src="./static/third_party/three.js/three.js"></script>
+<script src="./static/third_party/three.js/VRControls.js"></script>
+<script src="./static/dist/three.ar.js"></script>
+<!--AR and Three.js Scripts--->
+<script>
+
+var vrDisplay;
+var vrFrameData;
+var vrControls;
+var arView;
+
+var canvas;
+var camera;
+var scene;
+var renderer;
+var cube;
+var line;
+var clones = [];
+
+var colors = [
+  new THREE.Color( 0x66a3ff ),
+  new THREE.Color( 0x4d94ff),
+  new THREE.Color( 0x3385ff ),
+  new THREE.Color( 0x1a75ff ),
+  new THREE.Color( 0x0066ff ),
+  new THREE.Color( 0x005ce6 ),
+  new THREE.Color( 0x0052cc ),
+  new THREE.Color( 0x0047b3 )
+];
+
+THREE.ARUtils.getARDisplay().then(function (display) {
+  if (display) {
+    vrFrameData = new VRFrameData();
+    vrDisplay = display;
+    init();
+  } else {
+    THREE.ARUtils.displayUnsupportedMessage();
+  }
+});
+
+function init() {
+  var arDebug = new THREE.ARDebug(vrDisplay);
+  document.body.appendChild(arDebug.getElement());
+
+  // Setup the three.js rendering environment
+  renderer = new THREE.WebGLRenderer({ alpha: true });
+  renderer.setPixelRatio(window.devicePixelRatio);
+  console.log('setRenderer size', window.innerWidth, window.innerHeight);
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.autoClear = false;
+  canvas = renderer.domElement;
+  document.body.appendChild(canvas);
+  scene = new THREE.Scene();
+
+  arView = new THREE.ARView(vrDisplay, renderer);
+
+  camera = new THREE.ARPerspectiveCamera(
+    vrDisplay,
+    60,
+    window.innerWidth / window.innerHeight,
+    vrDisplay.depthNear,
+    vrDisplay.depthFar
+  );
+
+  vrControls = new THREE.VRControls(camera);
+
+  window.addEventListener('resize', onWindowResize, false);
+  canvas.addEventListener('touchstart', onClick, false);
+
+  update();
+}
+
+/**
+ * The render loop, called once per frame. Handles updating
+ * our scene and rendering.
+ */
+function update() {
+  arView.render();
+  camera.updateProjectionMatrix();
+  vrDisplay.getFrameData(vrFrameData);
+  vrControls.update();
+  renderer.clearDepth();
+
+  //make all cube clones rotate using the loop
+  if(clones.length > 0){
+    for (var i = 0; i < clones.length; i++) {
+      clones[i].rotation.x += 0.1;
+      clones[i].rotation.y += 0.1;
+      }
+  }
+  //render the scene
+  renderer.render(scene, camera);
+
+  requestAnimationFrame(update);
+}
+
+function onWindowResize () {
+  console.log('setRenderer size', window.innerWidth, window.innerHeight);
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+}
+
+/**
+ * When clicking on the screen, create the corresponding object at the user's
+ * current position.
+ */
+function onClick () {
+  var x = document.getElementById("objects");
+  var object = x.options[x.selectedIndex].value;
+  if(object == "cube"){
+    createCube();
+  } else if(object == "line"){
+    createLine();
+  } else if(object == "sprite"){
+    createSprite();
+  }
+}
+/**
+ * Create a blue rotating cube object
+ */
+function createCube(){
+  var geometry = new THREE.BoxGeometry( 0.05, 0.05, 0.05 );
+  var faceIndices = ['a', 'b', 'c'];
+  for (var i = 0; i < geometry.faces.length; i++) {
+    var f  = geometry.faces[i];
+    for (var j = 0; j < 3; j++) {
+      var vertexIndex = f[faceIndices[ j ]];
+      f.vertexColors[j] = colors[vertexIndex];
+    }
+  }
+  var material = new THREE.MeshBasicMaterial({ vertexColors: THREE.VertexColors });
+  cube = new THREE.Mesh(geometry, material);
+
+  // Fetch the pose data from the current frame
+  var pose = vrFrameData.pose;
+
+  // Convert the pose orientation and position into
+  // THREE.Quaternion and THREE.Vector3 respectively
+  var ori = new THREE.Quaternion(
+    pose.orientation[0],
+    pose.orientation[1],
+    pose.orientation[2],
+    pose.orientation[3]
+  );
+
+  var pos = new THREE.Vector3(
+    pose.position[0],
+    pose.position[1],
+    pose.position[2]
+  );
+
+  var dirMtx = new THREE.Matrix4();
+  dirMtx.makeRotationFromQuaternion(ori);
+
+  var push = new THREE.Vector3(0, 0, -1.0);
+  push.transformDirection(dirMtx);
+  pos.addScaledVector(push, 0.125);
+
+  //create objects
+  var clone = cube.clone();
+  clones.push(clone);
+  scene.add(clone);
+  clone.position.copy(pos);
+  clone.quaternion.copy(ori);
+}
+/**
+ * Create a red Line object
+ */
+function createLine(){
+  //create a blue LineBasicMaterial
+  var material = new THREE.LineBasicMaterial({ color: 0xff3300 });
+  var geometry = new THREE.Geometry();
+  geometry.vertices.push(new THREE.Vector3(-2, 0, 0));
+  geometry.vertices.push(new THREE.Vector3(0, 2, 0));
+  geometry.vertices.push(new THREE.Vector3(2, 0, 0));
+  line = new THREE.Line(geometry, material);
+  scene.add(line);
+}
+
+/**
+ * Create balloons using Sprite
+ */
+function createSprite(){
+  var spriteMap = new THREE.TextureLoader().load( "./sprite_balloon.png" );
+  var spriteMaterial = new THREE.SpriteMaterial( { map: spriteMap, color: 0xffffff } );
+  var sprite = new THREE.Sprite( spriteMaterial );
+  scene.add(sprite);
+}
+</script>
+</body>
+</html>

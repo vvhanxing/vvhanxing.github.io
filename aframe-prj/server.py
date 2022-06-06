@@ -1,15 +1,21 @@
+from re import template
 from flask import Flask
 from flask import request
 
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    template_folder=".",
+    static_folder=".",
+    static_url_path=""
+)
 
 
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    html_txt='Hell0'
+    html_txt=''
     #with open("index_shadow3.html","r") as  txt:
-    with open("indexVR-try.html","r") as  txt:
+    with open("indexVR.html","r") as  txt:
         html_txt = ""
         html = list(txt.readlines())
         html_txt = "".join(html )

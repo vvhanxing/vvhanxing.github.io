@@ -9,21 +9,67 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script type="text/javascript" src="js/aframe.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.0/dist/aframe-extras.min.js"></script>
+        <script type="text/javascript" src="js/aframe-extras.min.js"></script>
         <script type="text/javascript" src="js/webxr.js"></script>
         <script type="text/javascript" src="js/joystick.js"></script>
         <script type="text/javascript" src="js/camera-cube-env.js"></script>
- 
         <script src="js/play-on-click.js"></script>	
         
 
+    
+        <script>
+
+
+
+            AFRAME.registerComponent('raycast-blab', {
+                init: function () {
+                this.el.addEventListener('raycaster-intersected', function (evt) {
+                    var el = evt.target;
+                // May get two intersection events per tick; same element, different faces.
+                    console.log('raycaster-intersected ' + el.outerHTML);
+                    el.setAttribute('material', 'color', '#7f7');
+                });
+
+                this.el.addEventListener('raycaster-intersected-cleared', function (evt) {
+                    var el = evt.target;
+                // May get two intersection events per tick; same element, different faces.
+                    console.log('raycaster-intersected-cleared ' + el.outerHTML);
+                    el.setAttribute('material', 'color', '#f77');
+                });
+                }
+            });
+
+
+
+
+        </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
+
+
     <body onload="init();">
-        <a-scene  joystick shadow="type: basic; autoUpdate: false;" renderer="antialias: false; colorManagement: true; physicallyCorrectLights: false;">
+
+
+        <a-scene vr-mode-ui="enabled:false"  joystick shadow="type: basic; autoUpdate: false;" renderer="antialias: false; colorManagement: true; physicallyCorrectLights: false;">
             <!-- Assets -->
             <a-assets>
-				<a-asset-item id="MainMesh" src="./assets/MainMesh.gltf"></a-asset-item>
+				<a-asset-item id="MainMesh" src="./assets/MainMesh.glb"></a-asset-item>
                 <img id="sky"                 src="./resources/sky.jpg">
                 <img id="icon-play"           src="./resources/play.png">
                 <img id="icon-pause"          src="./resources/pause.png">
@@ -32,29 +78,23 @@
                 <img id="icon-volume-low"     src="./resources/volume-low.png">
                 <img id="icon-volume-high"    src="./resources/volume-high.png">
 
+                <a-asset-item id="v" src="./assets/v.gltf">
 
                 <video id="videoBunny" preload="auto"
                 src="./resources/1.mp4"
                 width="160" height="90" autoplay loop="true"
                 crossOrigin="anonymous" muted></video>	  
  
-            
-           
- 
-
-
             </a-assets>
 
 
-      <a-entity material="shader: flat; src: #videoBunny"
-                geometry="primitive: plane; width: 45; height: 30;"
-                position="-30 35 0"
-                rotation="0 90 0"
-                play-on-click
-                visible="true">
-      </a-entity>
-
-
+            <a-entity material="shader: flat; src: #videoBunny"
+                        geometry="primitive: plane; width: 45; height: 30;"
+                        position="-30 35 0"
+                        rotation="0 90 0"
+                        play-on-click
+                        visible="true">
+            </a-entity>
 
             <!-- Entities -->
             
@@ -63,27 +103,109 @@
             <!-- Camera -->
             <a-entity id="player" 
                 position="0 -0.2 0" 
-                movement-controls="speed: 0.10000000149011612;">
+                movement-controls="speed: 0.100000;">
                 <a-entity id="camera" 
                     camera="near: 0.001" 
-                    position="0 1.7000000476837158 0" 
-                    look-controls="pointerLockEnabled: true">
-                        <a-entity id="cursor" cursor="fuse: false;" animation__click="property: scale; startEvents: click; easing: easeInCubic; dur: 50; from: 	0.1 0.1 0.1; to: 1 1 1"
-                            position="0 0 -0.1"
-                            geometry="primitive: circle; radius: 0.001;"
-                            material="color: #CCC; shader: flat;"
-                            raycaster = "far: 10.0; interval: 1500.0; objects: .clickable,.links">
-                        </a-entity>
+                    position="0 1.7 0" 
+                    look-controls="pointerLockEnabled: true"
+                    wasd-controls="true">
+                    
+                    <a-entity id="cursor" cursor="fuse: true;" animation__click="property: scale; startEvents: click; easing: easeInCubic; dur: 50; from: 	0.1 0.1 0.1; to: 1 1 1"
+                        position="0 0 -0.1"
+                        geometry="primitive: circle; radius: 0.001;"
+                        material="color: #CCC; shader: flat;"
+                        raycaster = "far: 100.0; interval: 1500.0; objects: .clickable,.links">
+                    </a-entity>
                 </a-entity>
                     
             </a-entity>
 
+            <a-box  position="0 5 0" rotation="0 45 0" color="#4CC3D9">
+
+            </a-box>
             <!-- Lights -->
             
-			<a-entity position="0.0 0.0 -0.0" light="castShadow:false; color:#ffffff; distance:40.0; type:point; intensity:1.0; shadowBias: -0.001; shadowCameraFar: 501.02; shadowCameraBottom: 12; shadowCameraFov: 101.79; shadowCameraNear: 0; shadowCameraTop: -5; shadowCameraRight: 10; shadowCameraLeft: -10; shadowRadius: 2;"></a-entity>
+			<a-entity position="0.0 0.0 -0.0" light="castShadow:false; color:#ffffff; distance:400.0; type:point; intensity:1.0; shadowBias: -0.001; shadowCameraFar: 501.02; shadowCameraBottom: 12; shadowCameraFov: 101.79; shadowCameraNear: 0; shadowCameraTop: -5; shadowCameraRight: 10; shadowCameraLeft: -10; shadowRadius: 2;"></a-entity>
 
             <!-- Sky -->
             <a-sky src="#sky" material="" geometry="" rotation="0 90 0"></a-sky>
+
+
+
+
+
+
+
+
+
+
+		  
+            <a-entity id="move" position="0 1.5 0">
+
+                <a-entity gltf-model="#v" 
+                          id="forward" 
+                          material="color: #f77" 
+                          scale=".5 .1 .5" 
+                          position=" 0 -.5 -1" 
+                          move="isForward:false" 
+                          rotation="0 0 0"
+                           >
+                </a-entity>
+        
+                <a-entity gltf-model="#v" 
+                          id="back" 
+                          material="color: #f77" 
+                          scale=".5 .1 .5" 
+                          position=" 0 -.5  1" 
+                          move="isForward:false" 
+                          rotation="0 180 0"
+                ></a-entity>
+        
+                <a-entity gltf-model="#v" 
+                          id="left" 
+                          material="color: #f77" 
+                          scale=".5 .1 .5" 
+                          position="-1 -.5  0" 
+                          move="isForward:false" 
+                          rotation="0 90 0"
+                ></a-entity>
+        
+                <a-entity gltf-model="#v" 
+                          id="right" 
+                          material="color: #f77" 
+                          scale=".5 .1 .5" 
+                          position=" 1 -.5  0" 
+                          move="isForward:false" 
+                          rotation="0 270 0"
+                
+                 ></a-entity>	
+                        
+            </a-entity>	  
+                  
+                  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
         </a-scene>
     </body>
 </html>

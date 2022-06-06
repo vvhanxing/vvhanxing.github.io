@@ -9,10 +9,81 @@
 
     
 
+	<script>
+
+	AFRAME.registerComponent('audiohandler', {
+		init:function() {
+		   let playing = false;
+		   let audio = document.querySelector("#audio");
+		   this.el.addEventListener('click', () => {
+				if(!playing) {
+					audio.play();
+				 } else {
+					audio.pause();
+					audio.currentTime = 0;
+				 }
+				 playing = !playing;
+		   });
+		}
+	  })
+
+
+
+
+	  </script>
+
+
+
+
+
+
+
+
+	<script>
+
+	AFRAME.registerComponent('play-all-model-animations', {
+		init: function () {
+		  this.model = null;
+		  this.mixer = null;
+	  
+		  var model = this.el.getObject3D('mesh');
+		  if (model) {
+			this.load(model);
+		  } else {
+			this.el.addEventListener('model-loaded', function (e) {
+			  this.load(e.detail.model);
+			}.bind(this));
+		  }
+		},
+	  
+		load: function (model) {
+		  this.model = model;
+		  this.mixer = new THREE.AnimationMixer(model);
+		  this.model.animations.forEach(animation => {
+			this.mixer.clipAction(animation, model).play();
+		  });
+		},
+	  
+		tick: function (t, dt) {
+		  if (this.mixer && !isNaN(dt)) {
+			this.mixer.update(dt / 1000);
+		  }
+		}
+	  });
+
+	</script>
+
+
+
+
+
+
+
+
 
 <script>
 
-	AFRAME.registerComponent('play-all-model-animations', {
+	AFRAME.registerComponent('f-play-all-model-animations', {
 
 		schema: {
 		isPlay: {type: 'string', default: "false"},
@@ -133,7 +204,7 @@
 	isBack:    {type: 'string', default: "false"},
 	isLeft:    {type: 'string', default: "false"},
 	isRight:   {type: 'string', default: "false"},
-	speed:     {type: 'number', default: 0.5},
+	speed:     {type: 'number', default: 0.2},
 	    
     },	
 	
@@ -251,10 +322,10 @@
 
 
 
+<!-- <a-scene vr-mode-ui="enabled:false" fog="type: linear; color: #AAB; far: 500; near: 0" shadow></a-scene> -->
 
 
-
-    <a-scene vr-mode-ui="enabled:false" shadow>
+    <a-scene vr-mode-ui="enabled:false"  shadow>
 
       <a-assets>
 
@@ -307,7 +378,7 @@
 	  
     
 
-    <a-entity gltf-model="#gltfmodel" rotation="0 3.14159265/4 0" position="0 5 0" scale="3 3 3" 
+    <a-entity gltf-model="#gltfmodel" play-all-model-animations rotation="0 3.14159265/4 0" position="0 5 0" scale="3 3 3" 
 	shadow="cast: true; receive: true">
 
 	</a-entity>
@@ -336,15 +407,15 @@
             <a-light type="ambient" intensity="2"></a-light>
 			
             <!-- cubes -->		
-			<a-entity gltf-model="#gift"  play-all-model-animations rotation="0 0 0" position="4 0 4" scale="3 3 3" shadow="cast: true; receive: true"></a-entity>
+			<a-entity gltf-model="#gift"  f-play-all-model-animations rotation="0 0 0" position="4 0 4" scale="3 3 3" shadow="cast: true; receive: true"></a-entity>
 			
-			<a-entity gltf-model="#gift"  play-all-model-animations rotation="0 0 0" position="-4 0 4" scale="3 3 3" shadow="cast: true; receive: true"></a-entity>	
+			<a-entity gltf-model="#gift"  f-play-all-model-animations rotation="0 0 0" position="-4 0 4" scale="3 3 3" shadow="cast: true; receive: true"></a-entity>	
 
-			<a-entity gltf-model="#gift"  play-all-model-animations rotation="0 0 0" position="4 0 -4" scale="3 3 3" shadow="cast: true; receive: true"></a-entity>	
+			<a-entity gltf-model="#gift"  f-play-all-model-animations rotation="0 0 0" position="4 0 -4" scale="3 3 3" shadow="cast: true; receive: true"></a-entity>	
 
-			<a-entity gltf-model="#gift"  play-all-model-animations rotation="0 0 0" position="0 0 4" scale="3 3 3" shadow="cast: true; receive: true"></a-entity>	
+			<a-entity gltf-model="#gift"  f-play-all-model-animations rotation="0 0 0" position="0 0 4" scale="3 3 3" shadow="cast: true; receive: true"></a-entity>	
 
-			<a-entity gltf-model="#gift"  play-all-model-animations rotation="0 0 0" position="0 0 -4" scale="3 3 3" shadow="cast: true; receive: true"></a-entity>	
+			<a-entity gltf-model="#gift"  f-play-all-model-animations rotation="0 0 0" position="0 0 -4" scale="3 3 3" shadow="cast: true; receive: true"></a-entity>	
 			
 			<!-- <a-entity geometry="primitive: box" material="color: #000" position="0 0 -2" raycast-blab=""></a-entity> -->
 	

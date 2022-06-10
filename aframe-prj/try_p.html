@@ -1,0 +1,24 @@
+<head>
+    <script type="text/javascript" src="js/aframe.min.js"></script>
+    <script type="text/javascript" src="js/aframe-physics-system.min.js"></script>
+    
+</head>
+
+
+</head>
+
+
+</head>
+
+<body>
+    <a-scene physics="friction: 0.1; restitution: 0.2">
+        <a-box position="-2 4 -3" rotation="0 45 0" color="#4CC3D9" dynamic-body 
+        spring="target: #anchor; damping: 0.25; stiffness: 25;"></a-box>
+
+
+<a-plane position="0 1 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4" static-body></a-plane>
+        <a-sky color="#ECECEC"></a-sky>
+    </a-scene>
+</body>
+
+</html>

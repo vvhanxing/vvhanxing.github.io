@@ -15,7 +15,7 @@ app = Flask(
 def home():
     html_txt=''
     #with open("index_shadow3.html","r") as  txt:
-    with open("indexVR.html","r") as  txt:
+    with open("indexVR-video.html","r") as  txt:
         html_txt = ""
         html = list(txt.readlines())
         html_txt = "".join(html )

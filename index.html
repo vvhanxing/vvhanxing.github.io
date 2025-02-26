@@ -1,80 +1,152 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>vvhanxing main page</title>
+    <meta charset="utf-8">
+    <title>VIVI's Creative Space</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .panel {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+
+        .panel:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .panel a {
+            text-decoration: none;
+            color: #2980b9;
+            font-weight: bold;
+            display: block;
+            margin: 10px 0;
+        }
+
+        .panel a:hover {
+            color: #3498db;
+        }
+
+        .header-image {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .sketchfab-container {
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .section-title {
+            background-color: #3498db;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 40px;
+        }
+    </style>
 </head>
- 
 <body>
-<h1> 
-VIVI
-</h1>
-<img border="0" src="1.jpg" alt="have fun!!" width="400" height="400">
+    <div class="container">
+        <div class="header-image">
+            <h1>VIVI's Creative Space</h1>
+            <img border="0" src="1.jpg" alt="Welcome!" width="400" height="400">
+        </div>
 
-<div class="sketchfab-embed-wrapper"><iframe width="640" height="480" src="https://sketchfab.com/models/3de29e448c6140a4b8afab29f82d12fe/embed?autospin=0.2" frameborder="0" allowvr allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" onmousewheel=""></iframe> <p style="font-size: 13px; font-weight: normal; margin: 5px; color: #4A4A4A;">  <a href="https://sketchfab.com/models/3de29e448c6140a4b8afab29f82d12fe?utm_medium=embed&utm_source=website&utm_campain=share-popup" target="_blank" style="font-weight: bold; color: #1CAAD9;">Pig</a>  by <a href="https://sketchfab.com/viviwuyue?utm_medium=embed&utm_source=website&utm_campain=share-popup" target="_blank" style="font-weight: bold; color: #1CAAD9;">viviwuyue</a> </p> </div>
+        <div class="sketchfab-container">
+            <div class="sketchfab-embed-wrapper">
+                <iframe width="640" height="480" 
+                    src="https://sketchfab.com/models/3de29e448c6140a4b8afab29f82d12fe/embed?autospin=0.2" 
+                    frameborder="0" 
+                    allowvr 
+                    allowfullscreen 
+                    mozallowfullscreen="true" 
+                    webkitallowfullscreen="true" 
+                    onmousewheel="">
+                </iframe>
+                <p style="font-size: 13px; color: #4A4A4A;">
+                    <a href="https://sketchfab.com/models/3de29e448c6140a4b8afab29f82d12fe" 
+                       target="_blank" 
+                       style="font-weight: bold; color: #1CAAD9;">Pig</a> by 
+                    <a href="https://sketchfab.com/viviwuyue" 
+                       target="_blank" 
+                       style="font-weight: bold; color: #1CAAD9;">viviwuyue</a>
+                </p>
+            </div>
+        </div>
 
+        <div class="gallery-grid">
+            <!-- Main Links -->
+            <div class="panel">
+                <h3 class="section-title">Explore</h3>
+                <a href="afarme.html">A-Frame Experience</a>
+                <a href="afarmeAR.html">A-Frame AR</a>
+                <a href="rotate3.html">Rotate Experience</a>
+            </div>
 
- 
- <img border="0" src="3.gif" alt="have fun!!" width="640" height="640">
- <a href="afarme.html">click here</a>
- <a href="afarmeAR.html">        click there</a>
- 
- <a href="rotate3.html"> rotate </a>
- 
- <a href="index_shadow3.html"> AR </a>
- <a href="wangdong.html"> AR </a>
- 
- <a href="indexVR.html" > VR </a>
- 
- 
-  <a href="love.html" > VR LOVE </a>
+            <div class="panel">
+                <h3 class="section-title">AR Content</h3>
+                <a href="index_shadow3.html">Shadow AR</a>
+                <a href="wangdong.html">Wangdong AR</a>
+                <a href="indexAR.html">AR World</a>
+            </div>
 
-  <a href="showWork.html" > VR show work </a>
- 
-  <a href="aframeAR.html" > aframeAR.html </a>
- <a href="indexAR.html" > AR WORLD </a>
- 
- 
- <h1> 
-Party2
-</h1>
- 
-   <a href="aframe-prj/index.html" > aframeAR-part.html </a>
+            <div class="panel">
+                <h3 class="section-title">VR Experiences</h3>
+                <a href="indexVR.html">VR Basic</a>
+                <a href="love.html">VR Love</a>
+                <a href="showWork.html">VR Show Work</a>
+            </div>
 
-   <h1> 
-      Party2
-      </h1>
-       
-         <a href="aframe-prj/index-video.html " >scene  aframeAR-part.html </a>   
-         <a href="aframe-prj/indexVR-video.html " >scene2  aframeAR-part.html </a>   
- 
-         <h1> 
-            Party3
-         </h1>
-             
-               <a href="googleWebAR/googleWebVR.html " > aframeAR-part.html </a>   
+            <div class="panel">
+                <h3 class="section-title">A-Frame Projects</h3>
+                <a href="aframeAR.html">A-Frame AR Basic</a>
+                <a href="aframe-prj/index.html">A-Frame Party</a>
+                <a href="aframe-prj/index-video.html">Scene 1</a>
+                <a href="aframe-prj/indexVR-video.html">Scene 2</a>
+                <a href="aframe-prj/indexVR.html">VR Scene</a>
+            </div>
 
+            <div class="panel">
+                <h3 class="section-title">Special Projects</h3>
+                <a href="googleWebAR/googleWebVR.html">Google WebVR</a>
+                <a href="love_2.html">Bear Experience</a>
+                <a href="/model-viewer/index.html">Model Viewer</a>
+            </div>
+        </div>
 
-            <h1> 
-                  Party4
-            </h1>
-                   
-                     <a href="love_2.html " > aframeAR-part.html bear </a>  
-
-
-                     <h1> 
-                        Party5
-                  </h1>
-                         
-                           <a href="/model-viewer/index.html " > aframeAR-part.html </a>  
-      
-      
-                           <h1> 
-                              Party6
-                        </h1>   
-
-                           <a href="aframe-prj/indexVR.html" > aframeAR-part.html </a>   
-
+        <div class="header-image">
+            <img border="0" src="3.gif" alt="Enjoy!" width="640" height="640">
+        </div>
+    </div>
 </body>
- 
 </html>
